@@ -4,11 +4,11 @@ import { Button } from 'reactstrap';
 import Tile from './tile';
 import TileComponent from './TileComponent';
 
-export default function run_demo(root) {
-  ReactDOM.render(<div id="parentDiv"><Demo /></div>, root);
+export default function run_game(root) {
+  ReactDOM.render(<div id="parentDiv"><Game /></div>, root);
 }
 
-class Demo extends React.Component {
+class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.init();
@@ -42,10 +42,30 @@ class Demo extends React.Component {
     this.setState(this.init());
   }
 
+  winner() {
+    return (
+      <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Winner!</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>You won with a score of: {this.state.playerClicks}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   endGame() {
     this.reset();
-    alert("Winner! Score: " + this.state.playerClicks);
     this.pairs = 0;
+    this.winner();
   }
 
   whenClicked(tile, resetTile, tilesMatch, isMatching) {
@@ -101,17 +121,23 @@ class Demo extends React.Component {
       }
 
       rowsArr.push(
-        <div className="row" key={j.toString()}>
+        <tr className="grid-row" key={j.toString()}>
           {cols}
-        </div>
+        </tr>
       );
       j++;
     }
 
     return (
       <div>
-        <Button onClick={this.reset.bind(this)}>Reset</Button>
-        {rowsArr}
+        <span className="row reset-btn"><Button onClick={this.reset.bind(this)}>Reset</Button></span>
+        <div class="grid-container">
+          <table id="grid">
+            <tbody>
+              {rowsArr}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }

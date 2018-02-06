@@ -30,19 +30,19 @@ export default class TileComponent extends React.Component {
   render() {
     if (this.state.isMatched || this.state.matching) {
       return (
-        <div className="col-sm-3" >
+        <td class="grid-col" >
           <span>
               {this.state.letter}
           </span>
-        </div>
+        </td>
       );
     }
 
     else {
       return (
-        <div className="col-sm-3" onClick={ this.clicked.bind(this) } >
+        <td class="grid-col" onClick={ this.clicked.bind(this) } >
           <span> </span>
-        </div>
+        </td>
       );
     }
   }

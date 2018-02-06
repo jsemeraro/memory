@@ -1,18 +1,87 @@
 /* This file is for your main application css. */
 
 @import "bootstrap";
-
-#parentDiv {
-  width: 75%;
+body {
+  // background-color: #f4bbffb0;
 }
 
-.side { padding: 4ex; text-align: center; }
-h1 { text-align: center; }
+.reset-btn {
+  padding: 20px;
+}
 
-.col-sm-3 {
-  height: 130px;
-  border: black 1px solid;
+#parentDiv {
   text-align: center;
-  line-height: 130px;
-  font-size: 25px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.grid-container {
+  display: flex;
+  justify-content: center;
+}
+
+.row {
+  margin: 0px;
+}
+
+.side {
+  padding: 4ex;
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+}
+
+@media (max-width: 1000px) {
+  .grid-col {
+    @media (max-height: 600px) and (min-width: 900px) {
+     height: 11vw;
+     width: 11vw; 
+    }
+    height: 20vw;
+    width: 20vw;
+    border: black 1px solid;
+    text-align: center;
+    line-height: 10vw;
+    font-size: 25px;
+  }
+}
+
+@media(min-width: 1001px) and (max-width: 1024px) {
+  .grid-col {
+    height: 15vw;
+    width: 15vw;
+    border: black 1px solid;
+    text-align: center;
+    line-height: 10vw;
+    font-size: 25px;
+  }
+}
+
+@media (min-width: 1024.01px) and (max-width: 1500px) {
+  .grid-col {
+    @media (max-height: 800px) {
+      height: 11vw;
+      width: 11vw;
+    }
+    height: 13vw;
+    width: 13vw;
+    border: black 1px solid;
+    text-align: center;
+    line-height: 10vw;
+    font-size: 25px;
+  }
+}
+
+@media (min-width: 1500.01px) {
+  .grid-col {
+    height: 10vw;
+    width: 10vw;
+    border: black 1px solid;
+    text-align: center;
+    line-height: 10vw;
+    font-size: 25px;
+  }
 }
