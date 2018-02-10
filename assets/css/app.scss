@@ -5,8 +5,16 @@ body {
   // background-color: #f4bbffb0;
 }
 
-.reset-btn {
+.top-row {
   padding: 20px;
+}
+
+.score {
+  // float: left;
+}
+
+.reset-btn {
+  // float: right;
 }
 
 #parentDiv {
@@ -81,7 +89,7 @@ h1 {
     width: 10vw;
     border: black 1px solid;
     text-align: center;
-    line-height: 10vw;
+    line-height: 9vw;
     font-size: 25px;
   }
 }

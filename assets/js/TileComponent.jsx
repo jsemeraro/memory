@@ -30,7 +30,7 @@ export default class TileComponent extends React.Component {
   render() {
     if (this.state.isMatched || this.state.matching) {
       return (
-        <td class="grid-col" >
+        <td className="grid-col" >
           <span>
               {this.state.letter}
           </span>
@@ -40,7 +40,7 @@ export default class TileComponent extends React.Component {
 
     else {
       return (
-        <td class="grid-col" onClick={ this.clicked.bind(this) } >
+        <td className="grid-col" onClick={ this.clicked.bind(this) } >
           <span> </span>
         </td>
       );

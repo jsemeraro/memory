@@ -44,16 +44,16 @@ class Game extends React.Component {
 
   winner() {
     return (
-      <div class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Winner!</h5>
+      <div className="modal" tabindex="-1" role="dialog">
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Winner!</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <p>You won with a score of: {this.state.playerClicks}</p>
             </div>
           </div>
@@ -130,8 +130,17 @@ class Game extends React.Component {
 
     return (
       <div>
-        <span className="row reset-btn"><Button onClick={this.reset.bind(this)}>Reset</Button></span>
-        <div class="grid-container">
+        <span className="row top-row">
+          {/* <div className="col-md-6">
+            <span className="score">
+              Score: {this.playerClicks}
+            </span>
+          </div> */}
+          <div className="col-md-12">
+            <Button className="reset-btn" onClick={this.reset.bind(this)}>Reset</Button>
+          </div>
+        </span>
+        <div className="grid-container">
           <table id="grid">
             <tbody>
               {rowsArr}
