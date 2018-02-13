@@ -10,8 +10,8 @@ defmodule Memory.Application do
     children = [
       # Start the endpoint when the application starts
       supervisor(MemoryWeb.Endpoint, []),
+      supervisor(Memory.GameRegistry, []),
       # Start your own worker by calling: Memory.Worker.start_link(arg1, arg2, arg3)
-      # worker(Memory.Worker, [arg1, arg2, arg3]),
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

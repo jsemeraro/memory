@@ -3,17 +3,25 @@ import ReactDOM from 'react-dom';
 import { Button } from 'reactstrap';
 import Tile from './tile';
 import TileComponent from './TileComponent';
+import socket from "./socket";
 
-export default function run_demo(root) {
-  ReactDOM.render(<div id="parentDiv"><Demo /></div>, root);
-}
-
-class Demo extends React.Component {
+export default class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.init();
+    this.name = props.name;
     this.gameCount = 0;
     this.pairs = 0;
+    
+    this.channel = socket.channel("games:" + this.name, {});
+    this.channel.join()
+      .receive("ok", this.gotView.bind(this))
+      .receive("error", resp => { console.log("Unable to join", resp) });
+  }
+
+  gotView(view) {
+    console.log("New view", view);
+    this.setState(view.game);
   }
 
   init() {
