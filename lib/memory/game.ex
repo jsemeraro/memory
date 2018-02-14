@@ -8,7 +8,7 @@ defmodule Memory.Game do
                         2 => %{0 => "", 1 => "", 2 => "", 3 => ""},
                         3 => %{0 => "", 1 => "", 2 => "", 3 => ""}}
         Agent.start_link(fn -> 
-            %{name: name, board: b, firstCoords: nil, secondCoords: nil, renderBoard: renderBoard, guesses: 0} 
+            %{name: name, board: b, firstCoords: nil, secondCoords: nil, renderBoard: renderBoard, guesses: 0, pairs: 0} 
         end, name: reg(name))
     end
 
@@ -21,7 +21,8 @@ defmodule Memory.Game do
         %{
             board: Map.get(state, :renderBoard), 
             guesses: Map.get(state, :guesses),
-            dontGuess: is_nil(Map.get(state, :firstCoords)) || is_nil(Map.get(state, :secondCoords))
+            dontGuess: is_nil(Map.get(state, :firstCoords)) || is_nil(Map.get(state, :secondCoords)),
+            pairs: Map.get(state, :pairs)
         }
     end
 
@@ -49,11 +50,10 @@ defmodule Memory.Game do
                     renderBoard = updateRenderBoard(state, Map.get(state, :secondCoords))
                     Map.put(state, :renderBoard, renderBoard)
                 end)
-                # guess(agent)
+                
             true ->
                 Agent.get(agent, fn state -> state end)
         end
-
         Agent.get(agent, fn state -> state end)
     end
 
@@ -69,6 +69,9 @@ defmodule Memory.Game do
             Agent.update(agent, fn state ->
                 state = Map.put(state, :renderBoard, updateRenderBoard(state, firstCoord, secCoord))
                 state = Map.put(state, :firstCoords, nil)
+                pairs = Map.get(state, :pairs)
+                IO.puts(pairs)
+                state = Map.put(state, :pairs, (pairs+1))
                 Map.put(state, :secondCoords, nil)
             end)
         # clear the guess if it's wrong
@@ -134,6 +137,19 @@ defmodule Memory.Game do
         y2 = String.to_integer(List.last(guess2))
 
         board[x1][y1] == board[x2][y2]
+    end
+
+    def reset(agent) do 
+        b = initBoard()
+        renderBoard = %{0 => %{0 => "", 1 => "", 2 => "", 3 => ""},
+                        1 => %{0 => "", 1 => "", 2 => "", 3 => ""},
+                        2 => %{0 => "", 1 => "", 2 => "", 3 => ""},
+                        3 => %{0 => "", 1 => "", 2 => "", 3 => ""}}
+
+        name = Agent.get(agent, fn state -> Map.get(state, :name) end)
+        Agent.update(agent, fn state ->
+            %{name: name, board: b, firstCoords: nil, secondCoords: nil, renderBoard: renderBoard, guesses: 0, pairs: 0} 
+        end)
     end
 
     # initialize board
