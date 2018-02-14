@@ -37,18 +37,18 @@ defmodule Memory.Game do
         cond do
             is_nil(firstCoords) ->
                 Agent.update(agent, fn state -> 
-                    state = Map.put(state, :guesses, Map.get(state, :guesses)+1)
-                    state = Map.put(state, :firstCoords, coords)
-                    renderBoard = updateRenderBoard(state, Map.get(state, :firstCoords))
-                    Map.put(state, :renderBoard, renderBoard)
+                    state1 = Map.put(state, :guesses, Map.get(state, :guesses)+1)
+                    state2 = Map.put(state1, :firstCoords, coords)
+                    renderBoard = updateRenderBoard(state2, Map.get(state2, :firstCoords))
+                    Map.put(state2, :renderBoard, renderBoard)
                 end)
 
             is_nil(secondCoords) ->
                 Agent.update(agent, fn state -> 
-                    state = Map.put(state, :guesses, Map.get(state, :guesses)+1)
-                    state = Map.put(state, :secondCoords, coords)
-                    renderBoard = updateRenderBoard(state, Map.get(state, :secondCoords))
-                    Map.put(state, :renderBoard, renderBoard)
+                    state1 = Map.put(state, :guesses, Map.get(state, :guesses)+1)
+                    state2 = Map.put(state1, :secondCoords, coords)
+                    renderBoard = updateRenderBoard(state2, Map.get(state2, :secondCoords))
+                    Map.put(state2, :renderBoard, renderBoard)
                 end)
                 
             true ->
@@ -58,7 +58,6 @@ defmodule Memory.Game do
     end
 
     def guess(agent) do
-        IO.puts("In Guess")
         state = Agent.get(agent, fn state -> state end)
         board = Map.get(state, :board)
         firstCoord = Map.get(state, :firstCoords)
@@ -70,14 +69,14 @@ defmodule Memory.Game do
                 state = Map.put(state, :renderBoard, updateRenderBoard(state, firstCoord, secCoord))
                 state = Map.put(state, :firstCoords, nil)
                 pairs = Map.get(state, :pairs)
-                IO.puts(pairs)
                 state = Map.put(state, :pairs, (pairs+1))
                 Map.put(state, :secondCoords, nil)
             end)
         # clear the guess if it's wrong
         else
             Agent.update(agent, fn state ->
-                state = Map.put(state, :renderBoard, clearCoords(state, firstCoord, secCoord))
+                newMap = clearCoords(state, firstCoord, secCoord)
+                state = Map.put(state, :renderBoard, newMap)
                 state = Map.put(state, :firstCoords, nil)
                 Map.put(state, :secondCoords, nil)
             end)
@@ -93,11 +92,13 @@ defmodule Memory.Game do
         x2 = String.to_integer(List.first(coord2))
         y2 = String.to_integer(List.last(coord2))
 
-        x1Map = renderBoard[x1]
-        x2Map = renderBoard[x2]
+        x1Map = Map.put(Map.get(renderBoard, x1), y1, "")
+        renderBoard = Map.put(renderBoard, x1, x1Map)
 
-        renderBoard = Map.put(renderBoard, x1, Map.put(x1Map, y1, ""))
-        Map.put(renderBoard, x2, Map.put(x2Map, y2, ""))
+        x2Map = Map.put(Map.get(renderBoard, x2), y2, "")
+
+
+        Map.put(renderBoard, x2, x2Map)
     end
 
     defp updateRenderBoard(state, coords1, coords2) do
