@@ -33,7 +33,13 @@ defmodule Memory.GameRegistry do
         elem(List.first(lookups), 0)
       end
     end
-  
+
+    def save(name, game) do
+      Agent.update Memory.GameRegistry, fn state ->
+        Map.put(state, name, game)
+      end
+    end
+
     # starts the Game with the given name
     def start(name) do
       case Supervisor.start_child(Memory.Supervisor, child_spec(name)) do

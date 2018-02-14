@@ -23,7 +23,6 @@ class Host extends React.Component {
         if (this.state.inGame) {
             return(<Game name={this.state.inGame} />);
         } else {
-            
             return(<Login createdGame={this.gameCreated.bind(this)} />);
         }
     }

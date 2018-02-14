@@ -4,7 +4,7 @@ defmodule MemoryWeb.UserSocket do
   ## Channels
   # channel "room:*", MemoryWeb.RoomChannel
   channel "games:*", MemoryWeb.GamesChannel
-  channel "lobby", MemoryWeb.LobbyChannel
+  channel "login", MemoryWeb.LoginChannel
 
 
   ## Transports

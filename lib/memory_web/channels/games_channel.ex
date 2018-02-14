@@ -20,21 +20,21 @@ defmodule MemoryWeb.GamesChannel do
 
   # Channels can be used in a request/response fashion
   # by sending replies to requests from the client
-  def handle_in("guess", %{"tile" =>  t}, socket) do
-    game = Game.guess(socket.assigns[:game], t)
+  def handle_in("guess", %{}, socket) do
+    Game.guess(socket.assigns[:game_agent])
+    game = Game.client_view(socket.assigns[:game_agent])
 
-    # Memory.GameRegistry.save(socket.assigns[:name], game)
-
-    socket = assign(socket, :game, game)
-    {:reply, {:ok, %{ "game" => Game.client_view(game)}}, socket}
+    {:reply, {:ok, %{ "game" => game}}, socket}
   end
 
-  # It is also common to receive messages from the client and
-  # broadcast to everyone in the current topic (games:lobby).
-  # def handle_in("shout", payload, socket) do
-  #   broadcast socket, "shout", payload
-  #   {:noreply, socket}
-  # end
+  # Channels can be used in a request/response fashion
+  # by sending replies to requests from the client
+  def handle_in("flip", %{"coords" => coords}, socket) do
+    Game.flip(socket.assigns[:game_agent], coords)
+    game = Game.client_view(socket.assigns[:game_agent])
+    
+    {:reply, {:ok, %{"game" => game} }, socket}
+  end
 
   # Add authorization logic here as required.
   defp authorized?(_payload) do
