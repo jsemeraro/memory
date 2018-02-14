@@ -1,8 +1,8 @@
 #!/bin/bash
 
-export PORT=5100
+export PORT=5120
 
-cd ~/www/memory
-./bin/memory stop || true
-./bin/memory start
+cd ~/www/memory2
+./bin/memory2 stop || true
+./bin/memory2 start
 
